@@ -16,5 +16,16 @@
         <header>
             <h3>Witaj w quizie</h3>
         </header>
+        <section>
+            <?php
+                if($results = $db->query($q))
+                    while($row = $results->fetch_assoc())
+                    {
+                        echo"
+                            
+                        ";
+                    }
+            ?>
+        </section>
     </body>
 </html>
