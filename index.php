@@ -12,12 +12,14 @@
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
-            $true_i = NULL;
-
+            $id = 1;
+  //          while (true)
+            {
+                $true_i = 0;
                 echo $row[$id]["question"]."<br>
                 <form action = 'index.php' method = 'GET'>  
                 ";
-                for ($i=0;$i<count($row);$i++)
+                for ($i=0;$i<count($row[]);$i++)
                 {
                     if($row[$i]['is_right'])
                         $true_i = $i;
@@ -26,9 +28,11 @@
                         ".$row[$i]['answer']."<br> ";
                 }
                 echo"
-                <input type='submit' value='Sprawdź'>
+                <input type='submit' name='submit' value='Sprawdź'>
                 </form>";
-                
+                echo "WARTOSC SUBMIT: ";
+                echo $_GET['submit'];
+
                 if(isset($_GET['radio_box']))
                 {
                     if($_GET['radio_box'] == $row[$true_i]['is_right'])
@@ -37,7 +41,10 @@
                         echo "Błędna odpowiedź, prawidłową odpowiedzią jest: ".$row[$true_i]['answer']."<br>";
                 }
                 else
-                    echo "Wybierz którąś z odpowiedzi!<br>";
+                    {
+                        echo "Wybierz którąś odpowiedź!<br>";
+                    }
+            }
 
         ?>
     </body>
