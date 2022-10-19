@@ -11,10 +11,11 @@
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
-            $punkty = $i = $j = 0;
-
+            $punkty = $final = 0;
+            $i = $ri = $wr = $num = 0;
             $id = 1;
             $right = [];
+            $wrong = [];
             echo $row[$id]["question"]."<br>
                 <form action = 'index.php' method = 'POST'>  
             ";
@@ -23,8 +24,9 @@
                 if($row[$i]['is_right'])
                 {
                     $right[] = $i;
-                    $j++;
+                    $ri++;
                 }
+                echo "<input type='hidden' name='$i' value='0'>";
                 echo "<input type='checkbox' name='$i' value='1'>".$row[$i]['answer']."<br>";
                 $i++;
             }
@@ -32,23 +34,38 @@
             "
                 <input type='submit' value='Sprawdź'>
             </form>";
+
+            print_r($_POST);
+            echo "<br>$right[0]";
+            echo "<br>$right[1]";
+            echo "<br>$ri";
+
+
+
+            /*
             $k = 0;
-            while($id == $row[$k]['ident'] && $k<$j)
+            while($id == $row[$k]['ident'] && $k<$ri)
             {
                 if(isset($_POST[$right[$k]]))
                 {
-                    for ($i=0;$i<$j;$i++)
+                    for ($i=0;$i<$ri;$i++)
                     {
                         if($row[$i]['is_right'] == $_POST[$i])
                         {
                             $punkty++;
+                            echo "Odpowiedź: ".$row[$i]['is_right']."<br>";
                         }
+                        else
+                            $num++;
                     }
                 }
                 $k++;
             }
+            if($num>0)
+                $punkty=0;
 
             echo "<br>Ilość punktów: $punkty";
+            */
             $con->close();
         ?>
     </body>
