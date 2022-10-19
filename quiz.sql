@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Paź 2022, 09:16
+-- Czas generowania: 19 Paź 2022, 10:01
 -- Wersja serwera: 10.4.24-MariaDB
--- Wersja PHP: 8.1.6
+-- Wersja PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -72,7 +72,19 @@ INSERT INTO `answers` (`id`, `content`, `is_right`, `questions_id`) VALUES
 (34, 'Sto i koniec', 0, 9),
 (35, 'Patronem', 1, 10),
 (36, 'Dezydery', 1, 10),
-(37, 'Sienkiewicz', 0, 10);
+(37, 'Sienkiewicz', 0, 10),
+(38, 'Dodatnie', 1, 8),
+(39, 'Ujemne', 1, 8),
+(40, 'Zmiennoprzecinkowe', 0, 8),
+(41, 'Całkowite', 1, 8),
+(42, 'Więcej niż jeden', 1, 9),
+(43, 'Mniej niż dwieście', 1, 9),
+(44, 'Około sto', 1, 9),
+(45, 'Dziesięć', 0, 9),
+(46, 'Patronem', 1, 10),
+(47, 'Dezydery', 1, 10),
+(48, 'Chłapowski', 1, 10),
+(49, 'Andrzej', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -229,7 +241,7 @@ ALTER TABLE `tests_has_answers`
 -- AUTO_INCREMENT dla tabeli `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT dla tabeli `questions`
