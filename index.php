@@ -12,9 +12,8 @@
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
-            $punkty = 0;
+            $punkty = $i = $j 0;
             $id = 1;
-            $i = 0;
             $right = [];
             echo $row[$i]["question"]."<br>
                 <form action = 'index.php' method = 'POST'>  
@@ -35,8 +34,12 @@
             </form>";
 
             if(isset($_POST['check_box']))
-                if($_POST['check_box'] == $row[$right]['is_right'])
-                    $punkty++;
+                while($id == $row[$j]['ident'])
+                {
+                    if($_POST['check_box'] == $row[$right[$j]]['is_right'])
+                        $punkty++;
+                    $j++;
+                }
 
             echo $punkty;
             
