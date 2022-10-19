@@ -8,7 +8,7 @@
         <?php
             $con = new mysqli("localhost","root","","quiz");
             $sql = "SELECT a.id AS aid, a.content AS answer, a.is_right, a.questions_id AS ident ,q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
-
+            #allah
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
