@@ -7,40 +7,48 @@
     <body>
         <?php
             $con = new mysqli("localhost","root","","quiz");
-            $sql = "SELECT a.id AS a_id, a.content AS answer, a.is_right, a.questions_id AS ident ,q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
+            $sql = "SELECT a.questions_id AS a_id, a.content AS answer, a.is_right, a.questions_id AS ident, q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
-            $punkty = $final = 0;
-            $i = $ri = $wr = $num = 0;
-            $id = 1;
-            $right = [];
-            $wrong = [];
-            echo $row[$id]["question"]."<br>
-                <form action = 'index.php' method = 'POST'>  
-            ";
-            while($id == $row[$i]['ident'])
+            //while(true)
             {
-                if($row[$i]['is_right'])
+                $punkty = 0;
+                $i = 0;
+                $id = $row[0]['a_id'];
+                $r = 0;
+                $right = [];
+                for($i=0;$i<)
+                echo $row[$id]["question"]."<br>
+                    <form action = 'index.php' method = 'POST'>  
+                ";
+                while($id == $row[$i]['ident'])
                 {
-                    $right[] = $i;
-                    $ri++;
+                    if($row[$i]['is_right'])
+                        $right[] = 1;
+                    else
+                        $right[] = 0;
+                    echo "<input type='hidden' name='$i' value='0'>";
+                    echo "<input type='checkbox' name='$i' value='1'>".$row[$i]['answer']."<br>";
+                    $i++;
                 }
-                echo "<input type='hidden' name='$i' value='0'>";
-                echo "<input type='checkbox' name='$i' value='1'>".$row[$i]['answer']."<br>";
-                $i++;
+                echo
+                "
+                    <input type='submit' value='Sprawdź'>
+                </form>";
+                /*
+                $_POST[2] = 2;
+                print_r($_POST);
+                echo "<br>";
+                print_r($right);
+                */
+                if($_POST == $right)
+                    $punkty++;
+                
+                echo $punkty;
             }
-            echo
-            "
-                <input type='submit' value='Sprawdź'>
-            </form>";
-
-            print_r($_POST);
-            echo "<br>$right[0]";
-            echo "<br>$right[1]";
-            echo "<br>$ri";
-
-
+           
+            
 
             /*
             $k = 0;
