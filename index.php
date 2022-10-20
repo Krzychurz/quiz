@@ -7,13 +7,53 @@
     <body>
         <?php
             $con = new mysqli("localhost","root","","quiz");
-            $sql = "SELECT a.questions_id AS a_id, a.content AS answer, a.is_right, a.questions_id AS ident, q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
+            $sql = "SELECT a.questions_id AS a_qid, a.content AS answer, a.is_right, q.id AS q_id, q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
- //           if(isset($_POST['petla']))
- //               $id = $_POST['petla'];
-  //          else
+            $sql2 = "SELECT id FROM questions";
+            $res2 = $con->query($sql2);
+            $row2 = $res2->fetch_all(MYSQLI_ASSOC);
+
+            $id_pytania;
+            $roznica;
+            $losowe;
+            $ilosc_pytan;
+
+            print_r($row2);
+            if(!isset($_POST['losowe']))
+            {
+
+
+                $losowe=range(1,10);
+                shuffle($losowe);
+
+            }      
+            
+            
+
+            echo $row[$roznica-1]["question"]."<br>
+            <form action = 'index.php' method = 'POST'>  
+            ";
+            
+            print_r($_POST);
+            echo "<br>";
+            print_r($row[$roznica-1]);
+
+            
+            echo
+            "
+            <input type='hidden' name='roznica' value='$roznica'>
+            <input type='hidden' name='id_pytania' value='$id_pytania'>
+            <input type='submit' value='Sprawdź'>
+            </form>";
+
+            
+
+            /*
+            if(isset($_POST['petla']))
+                $id = $_POST['petla'];
+            else
                 $id = 1;
             $r = $id;
             $punkty = 0;
@@ -47,14 +87,12 @@
             print_r($_POST);
             echo "<br>";
             print_r($right);
-            */
+            
             if($_POST == $right)
                     $punkty++;
 
             echo $punkty;
             
-
-            /*
             $k = 0;
             while($id == $row[$k]['ident'] && $k<$ri)
             {
