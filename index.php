@@ -11,44 +11,55 @@
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
-            $sql2 = "SELECT id FROM questions";
+            $sql2 = "SELECT id,content FROM questions";
             $res2 = $con->query($sql2);
             $row2 = $res2->fetch_all(MYSQLI_ASSOC);
 
             $id_pytania;
-            $roznica;
             $losowe;
-            $ilosc_pytan;
 
-            print_r($row2);
-            if(!isset($_POST['losowe']))
+            if(isset($_POST['id_pytania']))
             {
+                $id_pytania = $_POST['id_pytania'];
+                $id_pytania++;
+            }
+            else
+                $id_pytania = 1;
 
-
-                $losowe=range(1,10);
+            if(isset($_POST['losowe']))
+                $losowe=unserialize($_POST['losowe']);
+            else
+            {
+                $losowe=range(0,count($row2)-1);
                 shuffle($losowe);
+            }
 
-            }      
+            $ilosc_odp = 0;
+            while($id_pytania == $row[$ilosc_odp]['a_qid'])
+            {
+                $ilosc_odp++;
+            }
             
-            
+            echo $losowe[$id_pytania-1]."<br>";
+            print_r($losowe);
 
-            echo $row[$roznica-1]["question"]."<br>
+
+            echo $row2[$losowe[$id_pytania-1]]["content"]."<br>
             <form action = 'index.php' method = 'POST'>  
             ";
             
-            print_r($_POST);
-            echo "<br>";
-            print_r($row[$roznica-1]);
+            while($row[])
+            {
 
-            
+            }
+
+            $losowe=serialize($losowe);
             echo
             "
-            <input type='hidden' name='roznica' value='$roznica'>
+            <input type='hidden' name='losowe' value='$losowe'>
             <input type='hidden' name='id_pytania' value='$id_pytania'>
             <input type='submit' value='Sprawdź'>
             </form>";
-
-            
 
             /*
             if(isset($_POST['petla']))
