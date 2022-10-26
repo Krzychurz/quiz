@@ -7,7 +7,7 @@
     <body>
         <?php
             $con = new mysqli("localhost","root","","quiz");
-            $sql = "SELECT a.questions_id AS a_qid, a.content AS answer, a.is_right, q.id AS q_id, q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
+            $sql = "SELECT a.id AS a_id, a.content AS answer, a.is_right, q.id AS q_id, q.content AS question FROM answers AS a JOIN questions AS q ON a.questions_id = q.id";
             $res = $con->query($sql);
             $row = $res->fetch_all(MYSQLI_ASSOC);
 
@@ -35,7 +35,7 @@
             }
 
             $ilosc_odp = 0;
-            while($id_pytania == $row[$ilosc_odp]['a_qid'])
+            while($id_pytania == $row[$ilosc_odp]['q_id'])
             {
                 $ilosc_odp++;
             }
@@ -45,14 +45,46 @@
 
 
             echo $row2[$losowe[$id_pytania-1]]["content"]."<br>
-            <form action = 'index.php' method = 'POST'>  
-            ";
+            <form action = 'index.php' method = 'POST'>";
             
-            while($row[])
-            {
-
-            }
-
+			echo $row2[$id_pytania]['id'];
+			
+			$spr;
+			$j=0;
+			$dobrze = 1;
+            for($i=0;$i<mysqli_num_rows($res);$i++)
+			{
+				if($row[$i]['q_id'] == $row2[$losowe[$id_pytania-1]])
+				{
+					if(!$row[$i]['is_right'])
+						$spr[$j] = 0;
+					else
+						$spr[$j] = 1;
+					
+					echo "<input type='hidden' name='$j' value=0>";
+					echo "<input type='checkbox' name='$j' value=1>";
+					echo $row[$i]['answer']."<br>";
+					$j++;
+				}
+			}
+			
+			//print_r ($spr);
+			echo"<br>".count($spr)."<br>";
+			print_r ($_POST);
+			
+			if(isset($_POST[0]))
+			{	
+				for($i=0;$i<count($spr);$i++)
+				{
+					if($spr[$i] != $_POST[$i])
+					{
+						$dobrze = 0;
+						break;
+					}
+				}
+			}	
+			echo "<br>ODPOWIEDŹ".$dobrze;
+			
             $losowe=serialize($losowe);
             echo
             "
