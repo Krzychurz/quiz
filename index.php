@@ -20,7 +20,24 @@
             $akt;
             $id_pytania;
             $losowe;
-            $limit = 5;
+            $limit=5;
+            $dobrze=0;
+
+            if(isset($_POST['spr']))
+            {	
+                $dobrze=1;
+                for($i=0;$i<count($spr);$i++)
+                {
+                    if($spr[$i] != $_POST[$i])
+                    {
+                        $dobrze = 0;
+                        break;
+                    }
+                }
+            }	
+                
+            if($dobrze)
+                    $pkt++;
 
             if(isset($_POST['pkt']))
                 $pkt+=$_POST['pkt'];
@@ -64,7 +81,6 @@
                 <form action = 'index.php' method = 'POST'>";
 
                 $j=0;
-                $dobrze = 0;
                 for($i=0;$i<mysqli_num_rows($res);$i++)
                 {
                     if($row[$i]['q_id'] == $row2[$losowe[$id_pytania-1]]['id'])
@@ -80,22 +96,6 @@
                         $j++;
                     }
                 }
-
-                if(isset($_POST['spr']))
-                {	
-                    $dobrze=1;
-                    for($i=0;$i<count($spr);$i++)
-                    {
-                        if($spr[$i] != $_POST[$i])
-                        {
-                            $dobrze = 0;
-                            break;
-                        }
-                    }
-                }	
-                
-                if($dobrze)
-                    $pkt++;
 
                 //echo "<br>Punkty: $pkt<br>";
 
