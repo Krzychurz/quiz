@@ -20,21 +20,12 @@
             $akt;
             $id_pytania;
             $losowe;
+            $limit = 5;
 
             if(isset($_POST['pkt']))
                 $pkt+=$_POST['pkt'];
 
-            if(isset($_POST['koniec']))
-            {
-                echo
-                "
-                    Koniec quizu.
-                    Twoja ilość punktów: $pkt
-                ";
-            }
-            else
-            {
-                if(isset($_POST['id_pytania']))
+            if(isset($_POST['id_pytania']))
                 {
                     $id_pytania = $_POST['id_pytania'];
                     $id_pytania++;
@@ -42,6 +33,16 @@
                 else
                     $id_pytania = 1;
 
+            if(isset($_POST['koniec']) || $id_pytania == $limit+1)
+            {
+                echo
+                "
+                    Koniec quizu.
+                    Twoja ilość punktów: $pkt/$limit
+                ";
+            }
+            else
+            {
                 if(isset($_POST['losowe']))
                     $losowe=unserialize($_POST['losowe']);
                 else
@@ -99,9 +100,7 @@
                 //echo "<br>Punkty: $pkt<br>";
 
                 if($id_pytania == mysqli_num_rows($res2))
-                {
                     echo "<input type='hidden' name='koniec' value='1'>";
-                }
 
                 $akt=serialize($akt);
                 $losowe=serialize($losowe);
