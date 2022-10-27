@@ -96,7 +96,7 @@
                     }
                 }
 
-                echo "<br>Punkty: $pkt<br>";
+                //echo "<br>Punkty: $pkt<br>";
 
                 if($id_pytania == mysqli_num_rows($res2))
                     echo "<input type='hidden' name='koniec' value='1'>";
