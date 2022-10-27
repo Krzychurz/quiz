@@ -23,24 +23,8 @@
             $limit=5;
             $dobrze=0;
 
-            if(isset($_POST['spr']))
-            {	
-                $dobrze=1;
-                for($i=0;$i<count($spr);$i++)
-                {
-                    if($spr[$i] != $_POST[$i])
-                    {
-                        $dobrze = 0;
-                        break;
-                    }
-                }
-            }	
-                
-            if($dobrze)
-                    $pkt++;
-
             if(isset($_POST['pkt']))
-                $pkt+=$_POST['pkt'];
+                    $pkt+=$_POST['pkt'];
 
             if(isset($_POST['id_pytania']))
                 {
@@ -50,6 +34,38 @@
                 else
                     $id_pytania = 1;
 
+            
+                        
+            if(isset($_POST['losowe']))
+                $losowe=unserialize($_POST['losowe']);
+            else
+            {
+                $losowe=range(0,count($row2)-1);
+                shuffle($losowe);
+            }
+
+            $ilosc_odp = 0;
+            while($id_pytania == $row[$ilosc_odp]['q_id'])
+            {
+                $ilosc_odp++;
+            }
+
+            if(isset($_POST['spr']))
+            {	
+                $spr=unserialize($_POST['spr']);
+                $dobrze=1;
+                for($i=0;$i<count($spr);$i++)
+                {
+                    if($spr[$i] != $_POST[$i])
+                    {
+                        $dobrze = 0;
+                        break;
+                    }
+                }
+            }
+            
+            if($dobrze==1)
+                $pkt++;
             if(isset($_POST['koniec']) || $id_pytania == $limit+1)
             {
                 echo
@@ -58,25 +74,8 @@
                     Twoja ilość punktów: $pkt/$limit
                 ";
             }
-            else
-            {
-                if(isset($_POST['losowe']))
-                    $losowe=unserialize($_POST['losowe']);
-                else
-                {
-                    $losowe=range(0,count($row2)-1);
-                    shuffle($losowe);
-                }
-
-                $ilosc_odp = 0;
-                while($id_pytania == $row[$ilosc_odp]['q_id'])
-                {
-                    $ilosc_odp++;
-                }
-
-                if(isset($_POST['spr']))
-                    $spr=unserialize($_POST['spr']);
-
+            else {
+            
                 echo $row2[$losowe[$id_pytania-1]]["content"]."<br>
                 <form action = 'index.php' method = 'POST'>";
 
@@ -97,21 +96,22 @@
                     }
                 }
 
-                //echo "<br>Punkty: $pkt<br>";
+                echo "<br>Punkty: $pkt<br>";
 
                 if($id_pytania == mysqli_num_rows($res2))
                     echo "<input type='hidden' name='koniec' value='1'>";
-
-                $akt=serialize($akt);
-                $losowe=serialize($losowe);
-                echo
-                "
-                <input type='hidden' name='pkt' value='$pkt'>
-                <input type='hidden' name='spr' value='$akt'>
-                <input type='hidden' name='losowe' value='$losowe'>
-                <input type='hidden' name='id_pytania' value='$id_pytania'>
-                <input type='submit' value='Sprawdź'>
-                </form>";
+            
+            
+            $akt=serialize($akt);
+            $losowe=serialize($losowe);
+            echo
+            "
+            <input type='hidden' name='pkt' value='$pkt'>
+            <input type='hidden' name='spr' value='$akt'>
+            <input type='hidden' name='losowe' value='$losowe'>
+            <input type='hidden' name='id_pytania' value='$id_pytania'>
+            <input type='submit' value='Sprawdź'>
+            </form>";
             }
 
             /*
